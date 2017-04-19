@@ -6,6 +6,7 @@
 body {
     background-color: ddd;
     text-align: center;
+    font-family: 'Helvetica', sans-serif;
 }
 
 h1 {
@@ -13,5 +14,5 @@ h1 {
 }
 
 #gameCanvas {
-    margin: 25 auto;
+    margin: 10 auto;
 }
