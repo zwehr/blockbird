@@ -17,6 +17,8 @@ var birdWidthAndHeight = 20;
 var topWallHeight = 200;
 var bottomWallHeight = 200;
 
+var birdFallRate = 3;
+
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
@@ -53,11 +55,13 @@ function moveAll() {
     //make bird "jump" with click or Up key
     document.onclick = function() {
         birdY -= 100;
+        birdFallRate = 3;
     }
     
     //move bird down and wall left at all times
-    birdY += 3;
+    birdY += birdFallRate;
     wallX--;
+    birdFallRate += .1;
     
     //reset wall
     if (wallX < -20) {
@@ -73,7 +77,7 @@ function moveAll() {
 function checkForCollision() {
     //check to make sure bird is between top and bottom wall
     while (wallX < 140 && wallX > 100) {
-        if (birdY < (topWallY + topWallHeight) || birdY > bottomWallY + birdWidthAndHeight ) {
+        if (birdY < (topWallY + topWallHeight) || birdY > bottomWallY - birdWidthAndHeight ) {
             return true;
         } else {
             return false;
