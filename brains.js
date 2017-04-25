@@ -11,14 +11,13 @@ var birdX = 120;
 var birdY = 200;
 var wallX = 380;
 
-var topWallY = 0;
-var bottomWallY = 400;
+var topWallY = -150;
+var bottomWallY = 350;
 
 var wallWidth = 20;
 var birdWidthAndHeight = 20;
 
-var topWallHeight = 200;
-var bottomWallHeight = 200;
+var wallHeight = 350;
 
 var birdFallRate = 3;
 
@@ -45,9 +44,9 @@ function drawAll() {
     canvasContext.fillStyle = '#87cefa';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     canvasContext.fillStyle = '#79c000';
-    canvasContext.fillRect(wallX, topWallY, wallWidth, topWallHeight);
+    canvasContext.fillRect(wallX, topWallY, wallWidth, wallHeight);
     canvasContext.fillStyle = '#79c000';
-    canvasContext.fillRect(wallX, bottomWallY, wallWidth, bottomWallHeight);
+    canvasContext.fillRect(wallX, bottomWallY, wallWidth, wallHeight);
     canvasContext.fillStyle = '#fd684a';
     canvasContext.fillRect(birdX, birdY, birdWidthAndHeight, birdWidthAndHeight);
     canvasContext.fillStyle = '#000043';
@@ -84,6 +83,7 @@ function moveAll() {
     
     //reset wall
     if (wallX < -20) {
+        createNewWalls();
         wallX = 400;
     }
     
@@ -103,15 +103,15 @@ function resetGame() {
     wallX = 400;
     wallWidth = 20;
     birdWidthAndHeight = 20;
-    topWallHeight = 200;
-    bottomWallHeight = 200;
+    topWallY = -150;
+    bottomWallY = 350;
     birdFallRate = 3;
 }
 
 function checkForCollision() {
     //check to make sure bird is between top and bottom wall
     while (wallX < 140 && wallX > 100) {
-        if (birdY < (topWallY + topWallHeight) || birdY > bottomWallY - birdWidthAndHeight ) {
+        if (birdY < (topWallY + wallHeight) || birdY > bottomWallY - birdWidthAndHeight ) {
             return true;
         } else {
             return false;
@@ -123,4 +123,9 @@ function checkForCollision() {
         return true;
     } else 
         return false;
+}
+
+function createNewWalls() {
+    topWallY = Math.floor(Math.random()*250) - 250;
+    bottomWallY = topWallY + 500;
 }
