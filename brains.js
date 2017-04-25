@@ -35,7 +35,7 @@ function runGame() {
                 gamePaused = true;
             }
             moveAll();
-    }}, 20);
+    }}, 15);
 }
         
 function drawAll() {
@@ -70,7 +70,7 @@ function moveAll() {
             firstGameStarted = true;
         } 
         else {
-            birdY -= 100;
+            birdY -= 130;
             birdFallRate = 3;
         }
     }
@@ -78,7 +78,7 @@ function moveAll() {
     //move bird down and wall left at all times
     birdY += birdFallRate;
     wallX -= 4;
-    birdFallRate += .2;
+    birdFallRate += .3;
     
     //reset wall
     if (wallX < -20) {
