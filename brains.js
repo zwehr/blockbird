@@ -11,13 +11,13 @@ var birdX = 120;
 var birdY = 200;
 var wallX = 380;
 
-var topWallY = -150;
+var topWallY = -250;
 var bottomWallY = 350;
 
 var wallWidth = 20;
 var birdWidthAndHeight = 20;
 
-var wallHeight = 350;
+var wallHeight = 450;
 
 var birdFallRate = 3;
 
@@ -35,7 +35,6 @@ function runGame() {
                 gamePaused = true;
             }
             moveAll();
-            console.log("running");
     }}, 20);
 }
         
@@ -78,7 +77,7 @@ function moveAll() {
     
     //move bird down and wall left at all times
     birdY += birdFallRate;
-    wallX -= 2;
+    wallX -= 4;
     birdFallRate += .2;
     
     //reset wall
@@ -103,7 +102,7 @@ function resetGame() {
     wallX = 400;
     wallWidth = 20;
     birdWidthAndHeight = 20;
-    topWallY = -150;
+    topWallY = -250;
     bottomWallY = 350;
     birdFallRate = 3;
 }
@@ -126,6 +125,6 @@ function checkForCollision() {
 }
 
 function createNewWalls() {
-    topWallY = Math.floor(Math.random()*250) - 250;
-    bottomWallY = topWallY + 500;
+    topWallY = Math.floor(Math.random()*450) - 450;
+    bottomWallY = topWallY + 600;
 }
