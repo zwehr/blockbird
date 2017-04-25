@@ -1,11 +1,14 @@
 var canvas;
 var canvasContext;
 
-var isPaused = false;
+var gamePaused = false;
+var firstGameStarted = false;
 
-var score = 0;
+var currentScore = 0;
+var highScore = 0;
 
-var birdY = 300;
+var birdX = 120;
+var birdY = 200;
 var wallX = 380;
 
 var topWallY = 0;
@@ -22,56 +25,87 @@ var birdFallRate = 3;
 window.onload = function() {
     canvas = document.getElementById('gameCanvas');
     canvasContext = canvas.getContext('2d');
-    //move objects and re-draw every 20 ms
-        setInterval(function() {
-            if (!isPaused) {
+    runGame();
+}
+
+function runGame() {
+    setInterval(function() {
+        if (!gamePaused) {
             drawAll();
+            if (!firstGameStarted) {
+                gamePaused = true;
+            }
             moveAll();
-            checkForCollision();
-        }}, 20);
+            console.log("running");
+    }}, 20);
 }
         
 function drawAll() {
     //draw initial shapes
-    canvasContext.fillStyle = 'black';
+    canvasContext.fillStyle = '#87cefa';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
-    canvasContext.fillStyle = 'white';
+    canvasContext.fillStyle = '#79c000';
     canvasContext.fillRect(wallX, topWallY, wallWidth, topWallHeight);
-    canvasContext.fillStyle = 'white';
+    canvasContext.fillStyle = '#79c000';
     canvasContext.fillRect(wallX, bottomWallY, wallWidth, bottomWallHeight);
-    canvasContext.fillStyle = 'red';
-    canvasContext.fillRect(120, birdY, birdWidthAndHeight, birdWidthAndHeight);
-    canvasContext.fillStyle = 'green';
-    canvasContext.font = '24px serif';
-    canvasContext.fillText('Score: ' + score, 10, 30);
+    canvasContext.fillStyle = '#fd684a';
+    canvasContext.fillRect(birdX, birdY, birdWidthAndHeight, birdWidthAndHeight);
+    canvasContext.fillStyle = '#000043';
+    canvasContext.font = '20px Arial';
+    canvasContext.fillText('Score: ' + currentScore, 20, 20);
+    canvasContext.font = '20px Arial';
+    canvasContext.fillText('High Score: ' + highScore, 20, 40);
     
     if (checkForCollision()) {
         console.log("collision");
-        isPaused = true;
+        gamePaused = true;
     }
 }
 
 function moveAll() {
-    //make bird "jump" with click or Up key
     document.onclick = function() {
-        birdY -= 100;
-        birdFallRate = 3;
+        console.log("click");
+        
+        if (gamePaused) {
+            resetGame();
+            gamePaused = false;
+            firstGameStarted = true;
+        } 
+        else {
+            birdY -= 100;
+            birdFallRate = 3;
+        }
     }
     
     //move bird down and wall left at all times
     birdY += birdFallRate;
-    wallX--;
-    birdFallRate += .1;
+    wallX -= 2;
+    birdFallRate += .2;
     
     //reset wall
     if (wallX < -20) {
-        wallX = 380;
+        wallX = 400;
     }
     
-    //increment score if bird passes wall
+    //increment score if bird passes wall, and 
     if (wallX == 100) {
-        score++;
+        currentScore++;
+        if (currentScore > highScore) {
+            highScore = currentScore;
+        }
     }
+}
+
+function resetGame() {
+    currentScore = 0;
+    birdX = 120;
+    birdY = 200;
+    wallX = 400;
+    wallWidth = 20;
+    birdWidthAndHeight = 20;
+    topWallHeight = 200;
+    bottomWallHeight = 200;
+    birdFallRate = 3;
 }
 
 function checkForCollision() {
@@ -89,5 +123,4 @@ function checkForCollision() {
         return true;
     } else 
         return false;
-    
 }

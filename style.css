@@ -4,9 +4,9 @@
 }
 
 body {
-    background-color: ddd;
+    background-color: #ddd;
     text-align: center;
-    font-family: 'Helvetica', sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 h1 {
@@ -14,5 +14,6 @@ h1 {
 }
 
 #gameCanvas {
+    border-radius: 7%;
     margin: 10 auto;
 }
