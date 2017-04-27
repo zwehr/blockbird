@@ -7,17 +7,14 @@ var firstGameStarted = false;
 var currentScore = 0;
 var highScore = 0;
 
-var birdX = 120;
 var birdY = 200;
 var wallX = 380;
-
 var topWallY = -250;
 var bottomWallY = 350;
 
-var wallWidth = 20;
-var birdWidthAndHeight = 20;
-
-var wallHeight = 450;
+var WALL_WIDTH = 20;
+var WALL_HEIGHT = 450;
+var BIRD_WIDTH_HEIGHT = 20;
 
 var birdFallRate = 3;
 
@@ -35,7 +32,8 @@ function runGame() {
                 gamePaused = true;
             }
             moveAll();
-    }}, 15);
+        }
+    }, 18);
 }
         
 function drawAll() {
@@ -43,11 +41,11 @@ function drawAll() {
     canvasContext.fillStyle = '#87cefa';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     canvasContext.fillStyle = '#79c000';
-    canvasContext.fillRect(wallX, topWallY, wallWidth, wallHeight);
+    canvasContext.fillRect(wallX, topWallY, WALL_WIDTH, WALL_HEIGHT);
     canvasContext.fillStyle = '#79c000';
-    canvasContext.fillRect(wallX, bottomWallY, wallWidth, wallHeight);
+    canvasContext.fillRect(wallX, bottomWallY, WALL_WIDTH, WALL_HEIGHT);
     canvasContext.fillStyle = '#fd684a';
-    canvasContext.fillRect(birdX, birdY, birdWidthAndHeight, birdWidthAndHeight);
+    canvasContext.fillRect(120, birdY, BIRD_WIDTH_HEIGHT, BIRD_WIDTH_HEIGHT);
     canvasContext.fillStyle = '#000043';
     canvasContext.font = '20px Arial';
     canvasContext.fillText('Score: ' + currentScore, 20, 20);
@@ -97,11 +95,8 @@ function moveAll() {
 
 function resetGame() {
     currentScore = 0;
-    birdX = 120;
     birdY = 200;
     wallX = 400;
-    wallWidth = 20;
-    birdWidthAndHeight = 20;
     topWallY = -250;
     bottomWallY = 350;
     birdFallRate = 3;
@@ -110,7 +105,7 @@ function resetGame() {
 function checkForCollision() {
     //check to make sure bird is between top and bottom wall
     while (wallX < 140 && wallX > 100) {
-        if (birdY < (topWallY + wallHeight) || birdY > bottomWallY - birdWidthAndHeight ) {
+        if (birdY < (topWallY + WALL_HEIGHT) || birdY > bottomWallY - BIRD_WIDTH_HEIGHT) {
             return true;
         } else {
             return false;
@@ -118,7 +113,7 @@ function checkForCollision() {
     }
     
     //check to make sure bird is above bottom of canvas
-    if (birdY > canvas.height - birdWidthAndHeight) {
+    if (birdY > canvas.height - BIRD_WIDTH_HEIGHT) {
         return true;
     } else 
         return false;
