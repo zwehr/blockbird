@@ -24,6 +24,7 @@ window.onload = function() {
     runGame();
 }
 
+// draw and re-draw everything (every 18 ms), based on if game has started or player has died
 function runGame() {
     setInterval(function() {
         if (!gamePaused) {
@@ -37,7 +38,6 @@ function runGame() {
 }
         
 function drawAll() {
-    //draw initial shapes
     canvasContext.fillStyle = '#87cefa';
     canvasContext.fillRect(0, 0, canvas.width, canvas.height);
     canvasContext.fillStyle = '#79c000';
@@ -59,9 +59,8 @@ function drawAll() {
 }
 
 function moveAll() {
+    // click starts game or resets game if player has died, otherwise moves bird up
     document.onclick = function() {
-        console.log("click");
-        
         if (gamePaused) {
             resetGame();
             gamePaused = false;
@@ -73,18 +72,18 @@ function moveAll() {
         }
     }
     
-    //move bird down and wall left at all times
+    // move bird down and wall left at all times
     birdY += birdFallRate;
     wallX -= 4;
     birdFallRate += .3;
     
-    //reset wall
+    // reset wall
     if (wallX < -20) {
         createNewWalls();
         wallX = 400;
     }
     
-    //increment score if bird passes wall, and 
+    // increment score if bird passes wall, and set highScore if necessary
     if (wallX == 100) {
         currentScore++;
         if (currentScore > highScore) {
@@ -119,6 +118,7 @@ function checkForCollision() {
         return false;
 }
 
+// create random y-coordinate for top wall, and place bottom wall 600 below
 function createNewWalls() {
     topWallY = Math.floor(Math.random()*450) - 450;
     bottomWallY = topWallY + 600;
